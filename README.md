@@ -1,61 +1,151 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Tinder-like Backend (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple backend API built with **Laravel** that manages people data:
+- Name
+- Age
+- Pictures
+- Location (latitude/longitude)
 
-## About Laravel
+This is a beginner-friendly project — no authentication is required.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Features
+- Add new people
+- List all people with pagination
+- Upload photos for people
+- Serve stored photos with public URLs
+- Git version control ready
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🛠️ Requirements
+- PHP >= 8.1
+- Composer
+- MySQL / MariaDB
+- Git
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## ⚡ Setup Instructions
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clone the project
+```bash
+git clone https://github.com/YOUR_USERNAME/tinder-backend.git
+cd tinder-backend
+2. Install dependencies
+bash
+Copy code
+composer install
+3. Setup environment
+Copy the example file:
 
-## Laravel Sponsors
+bash
+Copy code
+cp .env.example .env
+Generate Laravel app key:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+bash
+Copy code
+php artisan key:generate
+4. Configure database
+Update .env with your MySQL settings:
 
-### Premium Partners
+env
+Copy code
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=tinder
+DB_USERNAME=root
+DB_PASSWORD=
+Create database in MySQL:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+sql
+Copy code
+CREATE DATABASE tinder;
+5. Run migrations
+bash
+Copy code
+php artisan migrate
+6. Storage link (for photos)
+bash
+Copy code
+php artisan storage:link
+7. Start development server
+bash
+Copy code
+php artisan serve
+Server runs at:
+👉 http://127.0.0.1:8000
 
-## Contributing
+📡 API Endpoints
+1. Create person
+POST /api/people
+Body (JSON):
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+json
+Copy code
+{
+  "name": "Alice",
+  "age": 25,
+  "latitude": 28.61,
+  "longitude": 77.20
+}
+2. List people (paginated)
+GET /api/people
 
-## Code of Conduct
+Example Response:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+json
+Copy code
+{
+  "current_page": 1,
+  "data": [
+    {
+      "id": 1,
+      "name": "Alice",
+      "age": 25,
+      "latitude": 28.61,
+      "longitude": 77.20,
+      "photos": [
+        {
+          "id": 1,
+          "user_id": 1,
+          "path": "photos/abcd.jpg",
+          "url": "http://127.0.0.1:8000/storage/photos/abcd.jpg"
+        }
+      ]
+    }
+  ]
+}
+3. Upload photo
+POST /api/users/{id}/photo
+Form-data:
 
-## Security Vulnerabilities
+photo: (file upload)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Response:
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+json
+Copy code
+{
+  "url": "http://127.0.0.1:8000/storage/photos/abcd.jpg",
+  "photo": {
+    "id": 1,
+    "user_id": 1,
+    "path": "photos/abcd.jpg"
+  }
+}
+📝 Git Workflow
+Initialize (already done in this repo)
+bash
+Copy code
+git init
+git remote add origin https://github.com/YOUR_USERNAME/tinder-backend.git
+Commit changes
+bash
+Copy code
+git add .
+git commit -m "Meaningful commit message"
+git push origin main

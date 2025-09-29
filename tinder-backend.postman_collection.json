@@ -1,0 +1,74 @@
+{
+  "info": {
+    "name": "Tinder Backend API",
+    "_postman_id": "12345678-90ab-cdef-1234-567890abcdef",
+    "description": "Postman collection to test Laravel Tinder-like backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Person",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Alice\",\n  \"age\": 25,\n  \"latitude\": 28.61,\n  \"longitude\": 77.20\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/people",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "people"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List People",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/people",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "people"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Upload Photo",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "photo",
+              "type": "file",
+              "src": ""
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/users/1/photo",
+          "protocol": "http",
+          "host": ["127.0.0.1"],
+          "port": "8000",
+          "path": ["api", "users", "1", "photo"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

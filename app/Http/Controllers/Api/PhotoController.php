@@ -7,12 +7,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller {
-    public function upload(Request $request, $userId) {
+    public function upload(Request $request, $userId)
+    {
         $request->validate([
-            'photo' => 'required|image|max:2048'
+            'photo' => 'required|image|mimes:jpg,jpeg,png|max:2048'
         ]);
-        $path = $request->file('photo')->store('photos','public');
-        $photo = Photo::create(['user_id'=>$userId,'path'=>$path]);
-        return ['url'=>url(Storage::url($path)), 'photo'=>$photo];
+
+        $path = $request->file('photo')->store('photos', 'public');
+
+        $photo = Photo::create([
+            'user_id' => $userId,
+            'path' => $path
+        ]);
+
+        return response()->json([
+            'url' => url(Storage::url($path)),
+            'photo' => $photo
+        ]);
     }
 }
