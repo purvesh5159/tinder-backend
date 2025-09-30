@@ -12,5 +12,15 @@ class User extends Model {
     public function photos() {
         return $this->hasMany(Photo::class);
     }
+
+    public function swipesGiven()
+    {
+        return $this->hasMany(Swipe::class, 'user_id');
+    }
+
+    public function swipesReceived()
+    {
+        return $this->hasMany(Swipe::class, 'target_user_id');
+    }
 }
 

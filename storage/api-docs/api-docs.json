@@ -1,0 +1,275 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tinder Backend API",
+        "description": "A simple Tinder-like backend built in Laravel",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Local development server"
+        }
+    ],
+    "paths": {
+        "/api/people": {
+            "get": {
+                "tags": [
+                    "People"
+                ],
+                "summary": "List all people",
+                "operationId": "d7e5f6e1e63d1ccbc25feea6bda24149",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of people per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 10
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated list of people with photos"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "People"
+                ],
+                "summary": "Create a new person",
+                "operationId": "5ab554fde586daf3e4e08a9ac08d47ec",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "age"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Alice"
+                                    },
+                                    "age": {
+                                        "type": "integer",
+                                        "example": 25
+                                    },
+                                    "latitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 28.61
+                                    },
+                                    "longitude": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 77.2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Person created successfully"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}/photo": {
+            "post": {
+                "tags": [
+                    "Photos"
+                ],
+                "summary": "Upload a profile photo for a user",
+                "operationId": "25890f8c9f65d670a2f1b55754a56397",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "photo": {
+                                        "description": "Photo file",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Photo uploaded successfully"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/api/people/{id}/like": {
+            "post": {
+                "tags": [
+                    "Swipes"
+                ],
+                "summary": "Like a person",
+                "operationId": "2fc7b5f374e66b7cfeb376250f9c4e78",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Target user ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 2
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "description": "Who is liking",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Like registered successfully"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/people/{id}/dislike": {
+            "post": {
+                "tags": [
+                    "Swipes"
+                ],
+                "summary": "Dislike a person",
+                "operationId": "c944f3447e26d10604f2faed4505a50e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Target user ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 2
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "description": "Who is disliking",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Dislike registered successfully"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/api/people/liked": {
+            "get": {
+                "tags": [
+                    "Swipes"
+                ],
+                "summary": "Get the list of people liked by a user",
+                "operationId": "1a37c5bafe666880c045930922bfb687",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "User who liked others",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of liked people with photos"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "People",
+            "description": "People"
+        },
+        {
+            "name": "Photos",
+            "description": "Photos"
+        },
+        {
+            "name": "Swipes",
+            "description": "Swipes"
+        }
+    ]
+}

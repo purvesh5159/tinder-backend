@@ -1,74 +1,64 @@
 {
   "info": {
-    "name": "Tinder Backend API",
-    "_postman_id": "12345678-90ab-cdef-1234-567890abcdef",
-    "description": "Postman collection to test Laravel Tinder-like backend",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "_postman_id": "51c8787a-2685-4f21-928f-747841fdf19e",
+		"name": "Tinder Backend API (with swipes)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7414835",
+		"_collection_link": "https://cloudy-station-618953.postman.co/workspace/purvesh~1f7274e2-fa9e-40bf-83a5-ce12376f53e0/collection/7414835-51c8787a-2685-4f21-928f-747841fdf19e?action=share&source=collection_link&creator=7414835"
+	
   },
   "item": [
     {
       "name": "Create Person",
       "request": {
         "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
+        "header": [{"key":"Content-Type","value":"application/json"}],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"name\": \"Alice\",\n  \"age\": 25,\n  \"latitude\": 28.61,\n  \"longitude\": 77.20\n}"
+          "raw": "{\"name\":\"Alice\",\"age\":25,\"latitude\":28.61,\"longitude\":77.20}"
         },
-        "url": {
-          "raw": "http://127.0.0.1:8000/api/people",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["api", "people"]
-        }
-      },
-      "response": []
+        "url": {"raw":"http://127.0.0.1:8000/api/people","protocol":"http","host":["127.0.0.1"],"port":"8000","path":["api","people"]}
+      }
     },
     {
       "name": "List People",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://127.0.0.1:8000/api/people",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["api", "people"]
-        }
-      },
-      "response": []
+      "request": {"method":"GET","url":{"raw":"http://127.0.0.1:8000/api/people","protocol":"http","host":["127.0.0.1"],"port":"8000","path":["api","people"]}}
     },
     {
-      "name": "Upload Photo",
+      "name": "Upload Photo (form-data)",
       "request": {
         "method": "POST",
-        "header": [],
         "body": {
           "mode": "formdata",
-          "formdata": [
-            {
-              "key": "photo",
-              "type": "file",
-              "src": ""
-            }
-          ]
+          "formdata": [{"key":"photo","type":"file","src":""}]
         },
-        "url": {
-          "raw": "http://127.0.0.1:8000/api/users/1/photo",
-          "protocol": "http",
-          "host": ["127.0.0.1"],
-          "port": "8000",
-          "path": ["api", "users", "1", "photo"]
-        }
-      },
-      "response": []
+        "url": {"raw":"http://127.0.0.1:8000/api/users/1/photo","protocol":"http","host":["127.0.0.1"],"port":"8000","path":["api","users","1","photo"]}
+      }
+    },
+    {
+      "name": "Like person (POST)",
+      "request": {
+        "method": "POST",
+        "header": [{"key":"Content-Type","value":"application/json"}],
+        "body": {"mode":"raw","raw":"{\"user_id\":1}"},
+        "url": {"raw":"http://127.0.0.1:8000/api/people/2/like","protocol":"http","host":["127.0.0.1"],"port":"8000","path":["api","people","2","like"]}
+      }
+    },
+    {
+      "name": "Dislike person (POST)",
+      "request": {
+        "method": "POST",
+        "header": [{"key":"Content-Type","value":"application/json"}],
+        "body": {"mode":"raw","raw":"{\"user_id\":1}"},
+        "url": {"raw":"http://127.0.0.1:8000/api/people/2/dislike","protocol":"http","host":["127.0.0.1"],"port":"8000","path":["api","people","2","dislike"]}
+      }
+    },
+    {
+      "name": "Liked list (GET)",
+      "request": {
+        "method": "GET",
+        "url": {"raw":"http://127.0.0.1:8000/api/people/liked?user_id=1","protocol":"http","host":["127.0.0.1"],"port":"8000","path":["api","people","liked"],"query":[{"key":"user_id","value":"1"}]}
+      }
     }
   ]
 }
