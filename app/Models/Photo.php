@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model {
     protected $fillable = ['user_id','path'];
+    protected $appends = ['url'];
     public function user() {
         return $this->belongsTo(User::class);
     }
     
-    public function getUrlAttribute()
+      public function getUrlAttribute()
     {
-        return url(Storage::url($this->path));
+        return url('storage/' . $this->path);
     }
 }
